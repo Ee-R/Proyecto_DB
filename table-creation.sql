@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS idiomas;
 DROP TABLE IF EXISTS idioma_pelicula;
 DROP TABLE IF EXISTS peliculas;
+DROP TABLE IF EXISTS titulo_pelicula;
+DROP TABLE IF EXISTS titulos_de_peliculas;
 --DROP TABLE IF EXISTS departamentos;
 --DROP TABLE IF EXISTS referencias_peliculas;
 --DROP TABLE IF EXISTS historial_ediciones;
@@ -21,9 +23,6 @@ CREATE TABLE peliculas(
   id INT AUTO_INCREMENT PRIMARY KEY,
   fecha_estreno DATE,
   oscar BOOLEAN NOT NULL,
-  titulo_castellano VARCHAR(128) NOT NULL,
-  titulo VARCHAR(128) NOT NULL,
-  resumen VARCHAR(1024) NOT NULL, -- se rellenara con una string vacia si 
   id_precuela INT,
   id_secuela INT,
   duracion_minutos INT NOT NULL
@@ -38,11 +37,29 @@ CREATE TABLE idioma_pelicula(
 
 CREATE TABLE idiomas(
   id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(64) NOT NULL
+  nombre_iso VARCHAR(64) NOT NULL,
+  codigo_iso VARCHAR(4) NOT NULL
+);
+
+CREATE TABLE titulo_pelicula(
+  id_pelicula INT,
+  id_titulo INT,
+  id_idioma INT,
+  CONSTRAINT titulo_pelicula_pk PRIMARY KEY (id_pelicula,id_titulo,id_idioma)
+);
+
+CREATE TABLE titulos_de_peliculas(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(128)
+);
+
+CREATE TABLE resumen_pelicula(
+  id_pelicula INT,
+  id_idioma INT,
+  resumen VARCHAR(1024) NOT NULL, -- se rellenara con una string vacia si no tiene titulo
 );
 
 
---
 --CREATE TABLE historial_ediciones(
 --  id INT,
 --  id_usuario INT NOT NULL,
