@@ -14,7 +14,7 @@ try {
 
 try {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query = "SELECT * FROM peliculas;";
+    $query = "SELECT * FROM idiomas;";
     $statement = $dbh->prepare($query);
     $dbh->beginTransaction();
     $statement->execute();
@@ -25,5 +25,4 @@ try {
     $dbh->rollBack();
     echo "Transaction failed " . $e->getMessage();
 }
-
-print_r($results);
+$reqArr = json_decode(file_get_contents("php://input"), true);

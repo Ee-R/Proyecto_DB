@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>uopa</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <form action="" method="POST" id="formulario">
+            <h2>Pelicula</h2>
+            <div class=".titulos-pelicula">
+                <div class="pelicula-ref">
+                    <label >Titulo pelicula</label><br>
+                    <input type="text" name="username" class="titulo-pelicula">
+                    <fieldset class="idiomas-del-titulo">
+                        <legend>Idiomas que comparten el titulo de la pelicula</legend>
+
+                        <label>en</label>
+                        <input type="checkbox" name="check-en" id="en">
+
+                        <label>es</label>
+                        <input type="checkbox" name="check-es" id="es">
+
+                        <label>fr</label>
+                        <input type="checkbox" name="check-fr" id="fr">
+
+                        <label>de</label>
+                        <input type="checkbox" name="check-de" id="de">
+                    </fieldset>
+                </div>
+            </div>
+
+            <h3>titulos alternativos</h3>
+            <button class="agregar-titulo">agregar titulo</button>
+
+            <div class="titulos-alternativos" style="display:flex;flex-wrap:wrap;">
+            </div>
+
+
+
+            <h3>datos</h3>
+            <label for="oscar">oscar</label>
+            <input type="checkbox" name="oscar" id="oscar"><br>
+
+            <label for="estreno">fecha estreno</label><br>
+            <input type="date" name="estreno" id="estreno"  ><br>
+
+            <label for="duracion">duracion en minutos</label><br>
+            <input type="number" name="duracion" id="duracion"><br>
+
+            <br>
+            <hr>
+            <h2>Trabajadores</h2>
+            <label for="numero-deseado-trabajadores">numero de trabajadores a agregar</label><br>
+            <input type="number" id="numero-deseado-trabajadores">
+            <button id="num-trabajadores">go</button>
+            
+            <br>
+            <div  hidden="true" style="border:1px solid black;" id="trabajador-ref">
+                <label for="nombre">nombre trabajador</label><br>
+                <input type="text" name="nombre" id="nombre"><br>
+
+                <label for="apellido">apellido trabajador</label><br>
+                <input type="text" name="apellido" id="apellido"><br>
+
+                <label for="rol">Rol en la pelicula</label>
+                <select name="roles" id="rol">
+                    <option value="director">director</option>
+                    <option value="actor">actor</option>
+                    <option value="maquillaje">maquillaje</option>
+                    <option value="camara">camara</option>
+                    <option value="sonido">sonido</option>
+                    <option value="edicion">edicion</option>
+                    <option value="guionista">guionista</option>
+                </select><br>
+                <label for="fecha-nacimiento">fecha nacimiento</label>
+                <input type="date" name="fecha-nacimiento" id="fecha-nacimiento">
+            </div>
+            <div class="trabajadores" style="display:flex;flex-wrap:wrap;justify-content:space-around;">
+            </div>
+
+            <input type="submit" name="submit-button" value="submit">
+
+        </form>
+        <script src="pedro.js">
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,4 @@
+[("titanic","spanish","es")|
+("titanic","french","fr")|
+("titanic","english","en")|
+("titanic","english","de"):

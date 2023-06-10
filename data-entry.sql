@@ -1,8 +1,8 @@
---INSERT INTO idiomas(nombre) VALUES 
---("Spanish","es"),
---("German","de"),
---("English","en"),
---("French","fr");
+INSERT INTO idiomas(nombre_iso,codigo_iso) VALUES 
+("Spanish","es"),
+("German","de"),
+("English","en"),
+("French","fr");
 --
 --INSERT INTO peliculas(
 --  oscar,
