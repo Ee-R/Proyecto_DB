@@ -8,6 +8,7 @@
 -- ("German","de"),
 -- ("English","en"),
 -- ("French","fr"),
+-- ("Griego","el"),
 -- ("Japanese","ja");
 -- 
 -- INSERT INTO roles(nombre) VALUES
@@ -319,3 +320,30 @@ INSERT INTO titulo_pelicula(id_pelicula,id_titulo,id_idioma) VALUES
 (10,27,3),(10,28,4),(10,29,2),(10,30,1),
 (11,31,3),(11,32,4),(11,33,2),(11,34,1),
 (12,35,3),(12,35,4),(12,35,2),(12,36,1);
+
+INSERT INTO generos_de_peliculas(nombres) VALUES
+("Animacion"),
+("Fantasia"),
+("Accion"),
+("Aventura"),
+("Comedia"),
+("Ciencia Ficcion"),
+("Drama"),
+("Desastres"),
+("Historico");
+
+INSERT INTO genero_pelicula(id_pelicula,id_genero_de_pelicula) VALUES
+(1,3),(1,4),(1,5),
+(2,1),(2,2),
+(3,4),(3,2),(3,6),
+(4,5),(4,2),
+(5,5),(5,7),
+(6,1),(6,5),(6,7),
+(7,8),(7,9),(7,7),
+(7,8),(7,9),(7,7),
+(8,1),(8,5),(8,7),
+(9,4),(9,5),(8,6),
+(10,4),(9,5),(8,6),
+(11,4),(9,5),(8,6),
+(12,3),(9,7),(8,9),
+
