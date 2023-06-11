@@ -28,17 +28,26 @@
                         <input type="checkbox" name="check-de" id="de">
                     </fieldset>
                 </div>
+                <label for="idioma-original" class="idioma-original">idioma original</label>
+                <select name="roles" id="idioma-original" class="idioma-original">
+                    <option value="en">en</option>
+                    <option value="es">es</option>
+                    <option value="fr">fr</option>
+                    <option value="de">de</option>
+                </select><br>
             </div>
 
-            <h3>titulos alternativos</h3>
+            <h3>Titulos alternativos</h3>
             <button class="agregar-titulo">agregar titulo</button>
+            <button class="sacar-titulo">sacar ultimo titulo</button>
 
             <div class="titulos-alternativos" style="display:flex;flex-wrap:wrap;">
             </div>
 
 
 
-            <h3>datos</h3>
+            <h3>Datos</h3>
+
             <label for="oscar">oscar</label>
             <input type="checkbox" name="oscar" id="oscar"><br>
 
@@ -48,6 +57,12 @@
             <label for="duracion">duracion en minutos</label><br>
             <input type="number" name="duracion" id="duracion"><br>
 
+            <label for="precuela">precuela</label><br>
+            <input type="text" name="precuela" id="precuela"><br>
+
+            <label for="secuela">secuela</label><br>
+            <input type="text" name="secuela" id="secuela">
+
             <br>
             <hr>
             <h2>Trabajadores</h2>
@@ -56,25 +71,28 @@
             <button id="num-trabajadores">go</button>
             
             <br>
+            
             <div  hidden="true" style="border:1px solid black;" id="trabajador-ref">
                 <label for="nombre">nombre trabajador</label><br>
-                <input type="text" name="nombre" id="nombre"><br>
+                <input class="nombre-apellido" type="text" name="nombre" id="nombre"><br>
 
                 <label for="apellido">apellido trabajador</label><br>
-                <input type="text" name="apellido" id="apellido"><br>
+                <input class="nombre-apellido" type="text" name="apellido" id="apellido"><br>
 
                 <label for="rol">Rol en la pelicula</label>
-                <select name="roles" id="rol">
+                <select name="roles" id="rol" class="rol">
                     <option value="director">director</option>
+                    <option value="actor">actor principal</option>
                     <option value="actor">actor</option>
                     <option value="maquillaje">maquillaje</option>
                     <option value="camara">camara</option>
                     <option value="sonido">sonido</option>
                     <option value="edicion">edicion</option>
                     <option value="guionista">guionista</option>
+                    <option value="produccion">produccion</option>
                 </select><br>
                 <label for="fecha-nacimiento">fecha nacimiento</label>
-                <input type="date" name="fecha-nacimiento" id="fecha-nacimiento">
+                <input type="date" name="fecha-nacimiento" id="fecha-nacimiento" class="fecha-nacimiento">
             </div>
             <div class="trabajadores" style="display:flex;flex-wrap:wrap;justify-content:space-around;">
             </div>

@@ -37,7 +37,7 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="981" y="444" name="personas">
+</datatypes><table x="530" y="384" name="personas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -47,14 +47,14 @@
 <row name="fecha_nacimiento" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="pais_nacimiento" null="1" autoincrement="0">
+<row name="apellido" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="681" y="165" name="peliculas">
+<table x="526" y="189" name="peliculas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="titulo_pelicula" row="id_pelicula" />
@@ -81,45 +81,27 @@
 <part>id</part>
 </key>
 </table>
-<table x="997" y="150" name="trabajan">
+<table x="708" y="226" name="participaciones">
 <row name="id_pelicula" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="peliculas" row="id" />
-</row>
-<row name="id_rol" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="roles" row="id" />
-</row>
-<row name="id_departamento" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="departamentos" row="id" />
 </row>
 <row name="id_persona" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="personas" row="id" />
 </row>
+<row name="id_participacion" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
+<part>id_participacion</part>
+</key>
+<key type="UNIQUE" name="">
 <part>id_pelicula</part>
-<part>id_rol</part>
-<part>id_departamento</part>
 <part>id_persona</part>
 </key>
 </table>
-<table x="908" y="9" name="referencias_peliculas">
-<row name="id_referenciadora" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="peliculas" row="id" />
-</row>
-<row name="id_referenciada" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="peliculas" row="id" />
-</row>
-<key type="PRIMARY" name="">
-<part>id_referenciadora</part>
-<part>id_referenciada</part>
-</key>
-</table>
-<table x="209" y="114" name="genero_pelicula">
+<table x="242" y="208" name="genero_pelicula">
 <row name="id_pelicula" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="peliculas" row="id" />
@@ -133,7 +115,7 @@
 <part>id_genero_de_pelicula</part>
 </key>
 </table>
-<table x="179" y="295" name="generos_de_peliculas">
+<table x="281" y="348" name="generos_de_peliculas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -144,29 +126,21 @@
 <part>id</part>
 </key>
 </table>
-<table x="812" y="425" name="roles">
-<row name="id" null="1" autoincrement="1">
+<table x="911" y="329" name="participacion_rol">
+<row name="id_participacion" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="nombre" null="1" autoincrement="0">
+<default>NULL</default><relation table="participaciones" row="id_participacion" />
+</row>
+<row name="id_rol" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default></row>
+<default>NULL</default><relation table="roles" row="id" />
+</row>
 <key type="PRIMARY" name="">
-<part>id</part>
+<part>id_participacion</part>
+<part>id_rol</part>
 </key>
 </table>
-<table x="548" y="379" name="departamentos">
-<row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="nombre" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
-</table>
-<table x="421" y="15" name="idiomas">
+<table x="732" y="18" name="idiomas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -180,11 +154,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="608" y="28" name="idioma_pelicula">
-<row name="id_pelicula" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="peliculas" row="id" />
-</row>
+<table x="894" y="70" name="idioma_pelicula">
 <row name="idioma_original" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -192,12 +162,16 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="idiomas" row="id" />
 </row>
+<row name="id_pelicula" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="peliculas" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id_pelicula</part>
 <part>id_idioma</part>
 </key>
 </table>
-<table x="437" y="234" name="titulo_pelicula">
+<table x="472" y="48" name="titulo_pelicula">
 <row name="id_idioma" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="idiomas" row="id" />
@@ -215,7 +189,7 @@
 <part>id_titulo</part>
 </key>
 </table>
-<table x="210" y="410" name="titulos_de_peliculas">
+<table x="233" y="104" name="titulos_de_peliculas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -226,4 +200,16 @@
 <part>id</part>
 </key>
 </table>
+<table x="704" y="437" name="roles">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="nombre" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
 </sql>
+
