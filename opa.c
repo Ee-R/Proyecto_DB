@@ -4,13 +4,14 @@
 #define MAX_SIZE 64
 #define WORDS 2
 #define PAIRS_BUFFER 8192
-#define ENTRYS 139
+#define ENTRYS 146
 #define MOVIES 12
+
 
 int main(int argc, char *argv[])
 {
     int **participaciones = malloc(sizeof(int*) * MOVIES);
-    char pedro[][WORDS][MAX_SIZE] ={
+    char pedro[ENTRYS][WORDS][MAX_SIZE] ={
         {"Kate", "Winslet"},        
         {"Leonardo", "DiCaprio"},   
         {"Frances", "Fisher"},
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
         {"Mali", "Finn"},           
         {"Sharon", "Mann"},         
         {"Anna", "Roth"},           
+        {"Eric", "Roth"},           
         {"Lisa Denis", "Kennedy"},  
         {"Giedra", "Rackauskas"},   
         {"Hayao", "Miyazaki"},      
@@ -78,6 +80,7 @@ int main(int argc, char *argv[])
         {"Tom", "Sanders"},         
         {"Steven", "Rosenblum"},    
         {"Catherine", "McCormack"}, 
+        {"Winston", "Groom"}, 
         {"Sophie", "Marceau"},      
         {"Patrick", "McGoohan"},    
         {"Angus", "Macfadyen"},     
@@ -94,11 +97,13 @@ int main(int argc, char *argv[])
         {"James", "Tolkan"},        
         {"Claudia", "Wells"},       
         {"Dean", "Cundey"},         
+        {"Gary K.", "Wolf"},         
         {"Alan", "Silvestri"},      
         {"Lawrence G", "Paul"},     
         {"Harry", "Keramidas"},     
         {"Arthur", "Schmidt"},      
         {"Tom", "Hanks"},           
+        {"Bob", "Hoskins"},           
         {"Robin", "Wright"},        
         {"Gary", "Sinise"},         
         {"Sally", "Field"},         
@@ -150,7 +155,10 @@ int main(int argc, char *argv[])
         {"Thomas E. ", "Ackerman"}, 
         {"James", "Horner"},        
         {"James D. ", "Bissell"},   
-        {"Robert", "Dalva"}
+        {"Robert", "Dalva"},
+        {"Randall", "Wallace"},
+        {"Don", "Hahn"},
+        // agregados, Gary Wolf, Randall Wallace, Don Hahn
     };
     //for (int i = 0; i < ENTRYS; i++) {
     //    char *nombre = pedro[i][0];
@@ -162,11 +170,10 @@ int main(int argc, char *argv[])
     //    }
     //}
     int tamanios[MOVIES];
+    //for (int j = 0;j < ENTRYS;j++) {
+    //    printf("(%d - \"%s\",\"%s\"),\n",j,pedro[j][0],pedro[j][1]);
+    //}
     for (int i = 0; i < MOVIES; i++) {
-        for (int j = 0;j < ENTRYS;j++) {
-            printf("%d - %s %s\t\t",j+1,pedro[j][0],pedro[j][1]);
-            if(j % 3 == 0)printf("\n");
-        }
         int size = 0;
         int aux;
         participaciones[i] = malloc(sizeof(int)*32);
@@ -176,18 +183,17 @@ int main(int argc, char *argv[])
             scanf("%d",&aux);
         }while(aux != 0 && (participaciones[i][size-1] = aux));
         size--;
-        participaciones[i] = realloc(participaciones[i],size);
         tamanios[i] = size;
     }
 
     for(int i = 0; i < MOVIES; i++){
         for(int j = 0; j < tamanios[i]; j++){
-            printf("(%d,%d),",i+1,participaciones[i][j]);
+            printf("(%d,%d),",i, participaciones[i][j]);
         }
-        printf("\n");
+        if(tamanios[i] != 0)
+            printf("\n");
     }
+
 
     return 0;
 }
-
-
