@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS generos_de_peliculas;
 
 CREATE TABLE peliculas(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    fecha_estreno DATE,
+    fecha_estreno DATE NOT NULL,
     oscar BOOLEAN NOT NULL,
     id_precuela INT,
     id_secuela INT,

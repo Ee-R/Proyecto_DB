@@ -671,3 +671,40 @@ INSERT INTO participacion_rol(id_participacion,id_rol) VALUES
 (183,17),
 (184,17),
 (185,17);
+
+-- 9, 10, 11
+UPDATE peliculas SET id_precuela = 1 WHERE id = 1;
+UPDATE peliculas SET id_secuela = 1 WHERE id = 1;
+
+UPDATE peliculas SET id_precuela = 2 WHERE id = 2;
+UPDATE peliculas SET id_secuela = 2 WHERE id = 2;
+
+UPDATE peliculas SET id_secuela = 3 WHERE id = 3;
+UPDATE peliculas SET id_precuela = 3 WHERE id = 3;
+
+UPDATE peliculas SET id_secuela = 4 WHERE id = 4;
+UPDATE peliculas SET id_precuela = 4 WHERE id = 4;
+
+UPDATE peliculas SET id_secuela = 5 WHERE id = 5;
+UPDATE peliculas SET id_precuela = 5 WHERE id = 5;
+
+UPDATE peliculas SET id_secuela = 6 WHERE id = 6;
+UPDATE peliculas SET id_precuela = 6 WHERE id = 6;
+
+UPDATE peliculas SET id_secuela = 7 WHERE id = 7;
+UPDATE peliculas SET id_precuela = 7 WHERE id = 7;
+
+UPDATE peliculas SET id_secuela = 8 WHERE id = 8;
+UPDATE peliculas SET id_precuela = 8 WHERE id = 8;
+
+UPDATE peliculas SET id_secuela = 10 WHERE id = 9;
+UPDATE peliculas SET id_precuela = 9 WHERE id = 9;
+
+UPDATE peliculas SET id_secuela = 11 WHERE id = 10;
+UPDATE peliculas SET id_precuela = 9 WHERE id = 10;
+
+UPDATE peliculas SET id_secuela = 11 WHERE id = 11;
+UPDATE peliculas SET id_precuela = 10 WHERE id = 11;
+
+UPDATE peliculas SET id_secuela = 12 WHERE id = 12;
+UPDATE peliculas SET id_precuela = 12 WHERE id = 12;

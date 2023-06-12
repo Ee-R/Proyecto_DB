@@ -44,9 +44,6 @@
 <row name="nombre" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="fecha_nacimiento" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
 <row name="apellido" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -101,7 +98,7 @@
 <part>id_persona</part>
 </key>
 </table>
-<table x="242" y="208" name="genero_pelicula">
+<table x="294" y="207" name="genero_pelicula">
 <row name="id_pelicula" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="peliculas" row="id" />
@@ -126,7 +123,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="911" y="329" name="participacion_rol">
+<table x="911" y="266" name="participacion_rol">
 <row name="id_participacion" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="participaciones" row="id_participacion" />
@@ -200,7 +197,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="704" y="437" name="roles">
+<table x="764" y="393" name="roles">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -212,4 +209,3 @@
 </key>
 </table>
 </sql>
-
