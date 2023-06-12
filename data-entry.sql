@@ -332,7 +332,7 @@ INSERT INTO participaciones(id_pelicula,id_persona) VALUES
 (11,76),(11,77),(11,78),(11,79),(11,80),(11,81),(11,82),(11,83),(11,84),(11,85),(11,88),(11,89),(11,90),(11,125),
 (12,145),(12,62),(12,63),(12,64),(12,65),(12,66),(12,67),(12,68),(12,70),(12,71),(12,72),(12,73),(12,74),(12,75);
 
-INSERT INTO (id_participacion,id_rol) VALUES
+INSERT INTO participacion_rol(id_participacion,id_rol) VALUES
 (1,7),
 (1,15),
 (1,21),
@@ -670,4 +670,4 @@ INSERT INTO (id_participacion,id_rol) VALUES
 (182,17),
 (183,17),
 (184,17),
-(185,17),
+(185,17);
