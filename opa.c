@@ -3,14 +3,15 @@
 #include "stdlib.h"
 #define MAX_SIZE 64
 #define WORDS 2
-#define PAIRS_BUFFER 8192
+#define PAIRS_BUFFER 1024
 #define ENTRYS 146
 #define MOVIES 12
+#define ROLES 23
 
 
 int main(int argc, char *argv[])
 {
-    int **participaciones = malloc(sizeof(int*) * MOVIES);
+    //int **participaciones = malloc(sizeof(int*) * MOVIES);
     char pedro[ENTRYS][WORDS][MAX_SIZE] ={
         {"Kate", "Winslet"},        
         {"Leonardo", "DiCaprio"},   
@@ -160,6 +161,67 @@ int main(int argc, char *argv[])
         {"Don", "Hahn"},
         // agregados, Gary Wolf, Randall Wallace, Don Hahn
     };
+    char roles[ROLES][MAX_SIZE] = {
+        ("director fotografia"),
+        ("diseno de produccion"),
+        ("direccion arte"),
+        ("decoracion del set"),
+        ("vestuarista"),
+        ("maquillaje"),
+        ("editor"),
+        ("director"),
+        ("productor"),
+        ("casting"),
+        ("manager produccion"),
+        ("supervisor postproduccion"),
+        ("supervisor produccion"),
+        ("coproductor"),
+        ("productor ejecutivo"), 
+        ("actor principal"),
+        ("actor secundario"),
+        ("actor de voz"),
+        ("guionista"),
+        ("autor"),
+        ("personajes"),
+        ("compositor"),
+        ("animacion")
+    };
+    FILE *file_participaciones= fopen("./participaciones.txt", "r");
+    char *lineptr = NULL; // sera el buffer con la linea leida, cambia el puntero de archivo a la ultima linea
+    size_t len = 0;
+    int id_persona;
+    int pares_participacion_rol[PAIRS_BUFFER][2]; // [(id_participacion,id_rol)], la participacion x tiene un rol y
+    int cantidad_participaciones_en_peliculas = 0;
+
+    for(int j = 0; j < MOVIES; j++){
+        getline(&lineptr,&len,file_participaciones);
+        for (int k = 0; k < ROLES; k++) {
+            printf("id rol %s : %d\t\t",roles[k],k+1);
+            if(k % 2 == 0) printf("\n");
+        }
+        int i = 0;
+        int save_point;
+        while(1){
+            int not_null_char;
+            while((not_null_char = lineptr[i] != '\0') && lineptr[i] != ')' )i++;
+            if(!not_null_char)break;
+
+            cantidad_participaciones_en_peliculas++;
+            save_point = i + 1;
+            while(lineptr[i] != ',')i--;
+            sscanf(lineptr + i + 1,"%d",&id_persona);
+            i = save_point;
+            printf("Cuantas participaciones tuvo %s %s en la pelicual %d",pedro[id_persona-1][0],pedro[id_persona-1][1],j);
+            // el id_persona-1 porque los ids estan de [1,n]
+            printf("Rol de %s %s en la pelicula %d\n",pedro[id_persona-1][0],pedro[id_persona-1][1],j+1);
+            scanf("%d",&pares_participacion_rol[cantidad_participaciones_en_peliculas-1][1]);
+            pares_participacion_rol[cantidad_participaciones_en_peliculas-1][0] = cantidad_participaciones_en_peliculas;
+        }
+        free(lineptr);
+    }
+
+    fclose(file_participaciones);
+
     //for (int i = 0; i < ENTRYS; i++) {
     //    char *nombre = pedro[i][0];
     //    char *apellido = pedro[i][1];
@@ -169,30 +231,31 @@ int main(int argc, char *argv[])
     //        }
     //    }
     //}
-    int tamanios[MOVIES];
-    //for (int j = 0;j < ENTRYS;j++) {
-    //    printf("(%d - \"%s\",\"%s\"),\n",j,pedro[j][0],pedro[j][1]);
+    ////for (int j = 0;j < ENTRYS;j++) {
+    ////    printf("(%d - \"%s\",\"%s\"),\n",j,pedro[j][0],pedro[j][1]);
+    ////}
+    //
+    //int tamanios[MOVIES];
+    //for (int i = 0; i < MOVIES; i++) {
+    //    int size = 0;
+    //    int aux;
+    //    participaciones[i] = malloc(sizeof(int)*32);
+    //    do{
+    //        size++;
+    //        printf("\npelicula - %d, inserte id actor: \n",i+1);
+    //        scanf("%d",&aux);
+    //    }while(aux != 0 && (participaciones[i][size-1] = aux));
+    //    size--;
+    //    tamanios[i] = size;
     //}
-    for (int i = 0; i < MOVIES; i++) {
-        int size = 0;
-        int aux;
-        participaciones[i] = malloc(sizeof(int)*32);
-        do{
-            size++;
-            printf("\npelicula - %d, inserte id actor: \n",i+1);
-            scanf("%d",&aux);
-        }while(aux != 0 && (participaciones[i][size-1] = aux));
-        size--;
-        tamanios[i] = size;
-    }
 
-    for(int i = 0; i < MOVIES; i++){
-        for(int j = 0; j < tamanios[i]; j++){
-            printf("(%d,%d),",i, participaciones[i][j]);
-        }
-        if(tamanios[i] != 0)
-            printf("\n");
-    }
+    //for(int i = 0; i < MOVIES; i++){
+    //    for(int j = 0; j < tamanios[i]; j++){
+    //        printf("(%d,%d),",i, participaciones[i][j]);
+    //    }
+    //    if(tamanios[i] != 0)
+    //        printf("\n");
+    //}
 
 
     return 0;
