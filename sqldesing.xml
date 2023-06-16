@@ -37,7 +37,7 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="926" y="253" name="personas">
+</datatypes><table x="900" y="274" name="personas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -78,7 +78,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="681" y="230" name="participaciones">
+<table x="671" y="240" name="participaciones">
 <row name="id_pelicula" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="peliculas" row="id" />
@@ -123,7 +123,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="868" y="165" name="participacion_rol">
+<table x="866" y="173" name="participacion_rol">
 <row name="id_rol" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="roles" row="id" />
@@ -197,7 +197,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1073" y="153" name="roles">
+<table x="1067" y="153" name="roles">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
