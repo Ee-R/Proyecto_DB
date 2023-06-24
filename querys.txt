@@ -1,5 +1,5 @@
 1)
-SELECT tdp.titulo AS titulos, r.nombre AS directores 
+SELECT sp.parte,tdp.titulo AS titulos, r.nombre AS directores 
 FROM series_de_peliculas sdp 
 INNER JOIN serie_pelicula sp 
 ON sp.id_serie=sdp.id 
@@ -16,8 +16,7 @@ GROUP BY(part.id_pelicula)
 ORDER BY(sp.parte);
 
 2)
--- tomo la misma view, pero con actor y director
--- comparo entre las dos tablas en donde coincide el id_persona
+-- tomo views parecidas y comparo las dos en donde coincide el id_persona
 -- y tomo esa persona para identificar las peliculas en las que trabajo
 SELECT tdp.titulo FROM 
     (
@@ -42,6 +41,7 @@ GROUP BY(part.id_pelicula);
 
 3 y 4)
 -- reutilice la view de que peliculas tienen actores en 3 y 4
+
 CREATE VIEW peliculas_por_actores AS
 SELECT part.id_pelicula, COUNT(*) AS cantidad_actores 
 FROM participaciones part 
@@ -79,7 +79,7 @@ GROUP BY(p.id);
 -- si el actor tiene dos o mas participaciones en pelicula como actor, es tomado.
 -- el problema de esto es si llego a tener a un actor que sea primario y secundario a la vez
 
-SELECT pers.nombre,pers.apellido,COUNT(*) cuenta_participaciones 
+SELECT pers.nombre,pers.apellido,COUNT(*) cantidad_participaciones 
 FROM participaciones part 
 INNER JOIN roles r 
 ON part.id_rol=r.id 
@@ -88,39 +88,71 @@ IN ("actor principal","actor secundario")
 INNER JOIN personas pers 
 ON part.id_persona=pers.id 
 GROUP BY part.id_persona 
-HAVING cuenta_participaciones >= 2;
+HAVING cantidad_participaciones >= 2;
 
 6)
 SELECT AVG(p.duracion_minutos) "duracion promedio de peliculas de antes del 2000"
 FROM peliculas p 
 WHERE p.fecha_estreno < "2000-01-01";
 
-7) Hubo errores en el data entry y salen algunas que no deberian
-SELECT * FROM
-    (   -- view de peliculas y sus titulos
-        idioma_pelicula ip1 
-        INNER JOIN titulos_de_peliculas tdp 
-        ON ip1.id_titulo=tdp.id
-    )
-    LEFT JOIN 
-    (   -- view de peliculas con oscars, con idioma original como ingles
-        peliculas p 
-        INNER JOIN idioma_pelicula ip2 
-        ON p.id=ip2.id_pelicula 
-        INNER JOIN idiomas i ON i.id=ip2.id_idioma 
-        AND ip2.idioma_original 
-        AND i.codigo_iso="en" 
-        AND p.oscar
-    )
-ON ip1.id_pelicula=ip2.id_pelicula
-WHERE ip1.id_pelicula IS NULL
-GROUP BY ip1.id_pelicula;
+7) 
+-- esta consulta esta floja de papeles 
+-- pero rearmar las tablas supone un data entry espantoso
+SELECT tdp.titulo FROM peliculas p
+INNER JOIN idioma_pelicula ip
+ON ip.id_pelicula=p.id
+INNER JOIN idiomas i
+ON ip.id_idioma=i.id
+INNER JOIN titulos_de_peliculas tdp
+ON tdp.id=ip.id_titulo
+WHERE ip.idioma_original
+AND i.codigo_iso <> 'en'
+AND p.oscar;
+
+8) 
+-- tomo todas las participaciones con sus peliculas
+-- y preferimos el ingles para tener un idioma en comun
+-- con los titulos
+
+CREATE VIEW participaciones_actores AS
+SELECT 	part.id_pelicula,part.id_persona,ip.id_titulo
+FROM participaciones part
+INNER JOIN roles r
+ON r.id=part.id_rol
+AND r.nombre IN ('actor principal','actor secundario')
+INNER JOIN idioma_pelicula ip
+ON part.id_pelicula=ip.id_pelicula
+INNER JOIN idiomas i
+ON i.id=ip.id_idioma
+AND i.codigo_iso='en';
+
+-- tomo a todos los actores que participaron en star wars
+-- hago un inner join con los que no participaron en star wars
+-- ya participaciones_actores me trae el actor con su pelicula
+-- y con esto deberia traer los actores que no participaron unicamente
+-- en esta pelicula de la db.
+
+SELECT tdp2.titulo
+FROM participaciones_actores pac1
+INNER JOIN titulos_de_peliculas tdp1
+ON pac1.id_titulo=tdp1.id
+AND tdp1.titulo = 'Star Wars: Episode IV – A New Hope'
+INNER JOIN participaciones_actores pac2
+ON pac2.id_persona = pac1.id_persona
+INNER JOIN titulos_de_peliculas tdp2
+ON pac2.id_titulo=tdp2.id
+AND tdp2.titulo <> 'Star Wars: Episode IV – A New Hope';
 
 9)
 -- creo una view con todas las peliculas con sus titulos disponibles
 
 CREATE VIEW titulos_disponibles AS
-SELECT ip.idioma_original,tdp.id AS id_titulo,tdp.titulo,i.codigo_iso 
+SELECT 	
+	ip.id_pelicula,
+	ip.idioma_original,
+	tdp.id AS id_titulo,
+	tdp.titulo,
+	i.codigo_iso 
 FROM titulos_de_peliculas tdp
 INNER JOIN idioma_pelicula ip
 ON tdp.id=ip.id_titulo
@@ -130,9 +162,12 @@ ON i.id=ip.id_idioma;
 -- uso la misma view pero una tiene filtrada los idiomas originales
 -- y la otra tiene filtrada el titulo en espanol
 
-SELECT * FROM titulos_disponibles t1
+SELECT t1.titulo,p.duracion_minutos 
+FROM titulos_disponibles t1
 INNER JOIN titulos_disponibles t2 
 ON t1.id_titulo=t2.id_titulo
+INNER JOIN peliculas p
+ON p.id=t1.id_pelicula
 WHERE t1.idioma_original
 AND t2.codigo_iso="es"
 GROUP BY t1.id_titulo;
@@ -143,6 +178,3 @@ FROM genero_pelicula gp
 INNER JOIN generos_de_peliculas gdp 
 ON gdp.id=gp.id_genero_de_pelicula 
 GROUP BY (gdp.id);
-
-8) 
-
