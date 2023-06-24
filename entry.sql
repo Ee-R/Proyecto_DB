@@ -1,7 +1,23 @@
-INSERT INTO series_de_peliculas(nombre) VALUES 
-("Back to the future")
+TRUNCATE TABLE idiomas;
+TRUNCATE TABLE idioma_pelicula;
+TRUNCATE TABLE peliculas;
+TRUNCATE TABLE titulos_de_peliculas;
+TRUNCATE TABLE personas;
+TRUNCATE TABLE roles;
+TRUNCATE TABLE participaciones;
+TRUNCATE TABLE genero_pelicula;
+TRUNCATE TABLE generos_de_peliculas;
+TRUNCATE TABLE serie_pelicula;
+TRUNCATE TABLE series_de_peliculas;
 
-INSERT INTO serie_pelicula(id_pelicula,id_serie,parte) VALUES (9,1,1),(9,1,2),(9,1,3);
+-- Las tablas no es que no estan normalizadas, solo aplique desnormalizacion,
+-- total los valores no van a cambiar (?)
+
+INSERT INTO series_de_peliculas(nombre) VALUES 
+("Back to the future");
+
+INSERT INTO serie_pelicula(id_pelicula,id_serie,parte) VALUES (9,1,1),(10,1,2),(11,1,3);
+-- no esta totalmente normalizado, perdon profe, se repite el 1
 
 INSERT INTO peliculas(oscar,duracion_minutos,fecha_estreno) VALUES
 (TRUE,127,'1989-05-24'), -- indiana jones
@@ -317,8 +333,7 @@ UPDATE idioma_pelicula ip SET ip.idioma_original=TRUE WHERE
 (ip.id_pelicula=8 AND ip.id_idioma=3) OR
 (ip.id_pelicula=9 AND ip.id_idioma=3) OR
 (ip.id_pelicula=10 AND ip.id_idioma=3) OR
-(ip.id_pelicula=11 AND ip.id_idioma=3) OR
-(ip.id_pelicula=12 AND ip.id_idioma IN (3,4));
+(ip.id_pelicula=11 AND ip.id_idioma=3) OR (ip.id_pelicula=12 AND ip.id_idioma IN (3,4));
 
 -- indiana jones
 -- chihiro
@@ -335,40 +350,4 @@ UPDATE idioma_pelicula ip SET ip.idioma_original=TRUE WHERE
 
 INSERT INTO participaciones(id_pelicula,id_persona,id_rol) VALUES
 (1,46,7),(1,46,15),(1,46,21),(1,46,24),(1,120,21),(1,121,24),(1,122,19),(1,104,9),(1,123,14),(1,124,10),(1,125,10),(1,126,10),(1,102,10),(1,107,16),(1,108,16),(1,109,17),(1,110,16),(1,111,17),(1,112,16),(1,113,17),(1,49,22),(1,115,22),(1,116,2),(1,117,7),(1,118,14),(1,119,14),(2,22,8),(2,22,19),(2,23,9),(2,24,18),(2,25,18),(2,26,18),(2,27,18),(2,28,23),(2,29,23),(2,30,23),(2,31,23),(2,32,23),(2,33,23),(2,34,23),(2,35,2),(2,36,3),(2,37,22),(2,39,15),(3,46,7),(3,46,8),(3,46,15),(3,46,20),(3,47,9),(3,52,9),(3,40,16),(3,41,16),(3,42,17),(3,107,16),(3,43,17),(3,44,17),(3,45,16),(3,49,22),(3,50,6),(3,51,5),(4,127,20),(4,128,19),(4,129,19),(4,130,19),(4,131,9),(4,132,9),(4,133,15),(4,134,8),(4,135,16),(4,136,17),(4,137,16),(4,138,16),(4,139,16),(4,140,17),(4,142,22),(4,143,2),(4,144,7),(5,99,9),(5,76,8),(5,91,16),(5,93,17),(5,94,17),(5,95,17),(5,96,17),(5,98,9),(5,87,22),(5,90,7),(6,86,20),(6,100,19),(6,146,14),(6,118,9),(6,103,14),(6,104,9),(6,76,8),(6,92,16),(6,79,17),(6,101,18),(6,87,22),(6,106,2),(6,116,2),(6,105,5),(6,90,7),(7,1,16),(7,2,16),(7,3,17),(7,4,17),(7,5,17),(7,6,17),(7,7,17),(7,8,17),(7,9,2),(7,10,3),(7,11,5),(7,12,4),(7,13,7),(7,14,7),(7,14,8),(7,14,19),(7,15,7),(7,16,10),(7,17,11),(7,18,11),(7,20,12),(7,21,13),(8,53,8),(8,53,18),(8,53,19),(8,54,19),(8,55,18),(8,55,19),(8,56,18),(8,57,18),(8,58,18),(8,59,18),(8,60,18),(8,61,18),(9,76,8),(9,76,20),(9,77,9),(9,77,20),(9,78,16),(9,79,16),(9,80,16),(9,81,16),(9,82,17),(9,83,17),(9,84,17),(9,87,22),(9,89,7),(9,88,2),(9,90,7),(10,76,8),(10,76,20),(10,77,9),(10,77,20),(10,78,16),(10,79,16),(10,80,16),(10,81,17),(10,82,17),(10,83,17),(10,85,22),(10,89,7),(10,88,2),(10,90,7),(10,125,10),(11,76,8),(11,76,20),(11,77,9),(11,77,20),(11,78,16),(11,79,16),(11,80,16),(11,81,17),(11,82,17),(11,83,17),(11,85,22),(11,88,7),(11,89,2),(11,90,7),(11,125,10),(12,145,20),(12,62,8),(12,62,9),(12,62,16),(12,63,10),(12,66,2),(12,67,7),(12,68,16),(12,70,17),(12,72,17),(12,73,17),(12,74,17),(12,75,17);
-
--- 9, 10, 11
-UPDATE peliculas SET id_precuela = 1 WHERE id = 1;
-UPDATE peliculas SET id_secuela = 1 WHERE id = 1;
-
-UPDATE peliculas SET id_precuela = 2 WHERE id = 2;
-UPDATE peliculas SET id_secuela = 2 WHERE id = 2;
-
-UPDATE peliculas SET id_secuela = 3 WHERE id = 3;
-UPDATE peliculas SET id_precuela = 3 WHERE id = 3;
-
-UPDATE peliculas SET id_secuela = 4 WHERE id = 4;
-UPDATE peliculas SET id_precuela = 4 WHERE id = 4;
-
-UPDATE peliculas SET id_secuela = 5 WHERE id = 5;
-UPDATE peliculas SET id_precuela = 5 WHERE id = 5;
-
-UPDATE peliculas SET id_secuela = 6 WHERE id = 6;
-UPDATE peliculas SET id_precuela = 6 WHERE id = 6;
-
-UPDATE peliculas SET id_secuela = 7 WHERE id = 7;
-UPDATE peliculas SET id_precuela = 7 WHERE id = 7;
-
-UPDATE peliculas SET id_secuela = 8 WHERE id = 8;
-UPDATE peliculas SET id_precuela = 8 WHERE id = 8;
-
-UPDATE peliculas SET id_secuela = 10 WHERE id = 9;
-UPDATE peliculas SET id_precuela = 9 WHERE id = 9;
-
-UPDATE peliculas SET id_secuela = 11 WHERE id = 10;
-UPDATE peliculas SET id_precuela = 9 WHERE id = 10;
-
-UPDATE peliculas SET id_secuela = 11 WHERE id = 11;
-UPDATE peliculas SET id_precuela = 10 WHERE id = 11;
-
-UPDATE peliculas SET id_secuela = 12 WHERE id = 12;
-UPDATE peliculas SET id_precuela = 12 WHERE id = 12;
+-- esto tampoco esta completamente normalizado,se repite la pelicula, no me pagan lo suficiente (?

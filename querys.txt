@@ -1,0 +1,148 @@
+1)
+SELECT tdp.titulo AS titulos, r.nombre AS directores 
+FROM series_de_peliculas sdp 
+INNER JOIN serie_pelicula sp 
+ON sp.id_serie=sdp.id 
+INNER JOIN participaciones part 
+ON part.id_pelicula=sp.id_pelicula 
+INNER JOIN roles r 
+ON part.id_rol=r.id 
+AND r.nombre = "director" 
+INNER JOIN idioma_pelicula ip 
+ON ip.id_pelicula=part.id_pelicula 
+INNER JOIN titulos_de_peliculas tdp 
+ON tdp.id=ip.id_titulo 
+GROUP BY(part.id_pelicula) 
+ORDER BY(sp.parte);
+
+2)
+-- tomo la misma view, pero con actor y director
+-- comparo entre las dos tablas en donde coincide el id_persona
+-- y tomo esa persona para identificar las peliculas en las que trabajo
+SELECT tdp.titulo FROM 
+    (
+        participaciones part 
+        INNER JOIN roles r 
+        ON part.id_rol=r.id 
+        AND r.nombre="director"
+    )
+    INNER JOIN 
+    (
+        participaciones part1 
+        INNER JOIN roles r1 
+        ON part1.id_rol=r1.id 
+        AND r1.nombre="actor principal"
+    ) 
+ON part.id_persona=part1.id_persona 
+INNER JOIN idioma_pelicula ip 
+ON ip.id_pelicula=part.id_pelicula 
+INNER JOIN titulos_de_peliculas tdp 
+ON tdp.id=ip.id_titulo 
+GROUP BY(part.id_pelicula);
+
+3 y 4)
+-- reutilice la view de que peliculas tienen actores en 3 y 4
+CREATE VIEW peliculas_por_actores AS
+SELECT part.id_pelicula, COUNT(*) AS cantidad_actores 
+FROM participaciones part 
+INNER JOIN roles r ON r.id=part.id_rol 
+AND r.nombre 
+IN ('actor principal','actor secundario') 
+GROUP BY (id_pelicula);
+
+3)
+SELECT tdp.titulo, cantidad_actores 
+FROM peliculas_por_actores ppa 
+INNER JOIN idioma_pelicula ip 
+ON ip.id_pelicula=ppa.id_pelicula 
+INNER JOIN titulos_de_peliculas tdp 
+ON tdp.id=ip.id_titulo 
+GROUP BY (ip.id_pelicula)
+ORDER BY (ppa.cantidad_actores) DESC;
+
+4)
+SELECT tdp.titulo AS peliculas_sin_actores 
+FROM peliculas p 
+LEFT JOIN peliculas_por_actores ppa 
+ON ppa.id_pelicula=p.id 
+INNER JOIN idioma_pelicula ip 
+ON ip.id_pelicula=p.id 
+INNER JOIN titulos_de_peliculas tdp 
+ON tdp.id=ip.id_titulo 
+WHERE ppa.id_pelicula IS NULL 
+GROUP BY(p.id);
+
+5)
+-- primero filtro las participaciones de actores
+-- luego agrupo por actores, generando una view de las participaciones
+-- agrupadas por actor, y las termino contando con cuenta participaciones
+-- si el actor tiene dos o mas participaciones en pelicula como actor, es tomado.
+-- el problema de esto es si llego a tener a un actor que sea primario y secundario a la vez
+
+SELECT pers.nombre,pers.apellido,COUNT(*) cuenta_participaciones 
+FROM participaciones part 
+INNER JOIN roles r 
+ON part.id_rol=r.id 
+AND r.nombre 
+IN ("actor principal","actor secundario") 
+INNER JOIN personas pers 
+ON part.id_persona=pers.id 
+GROUP BY part.id_persona 
+HAVING cuenta_participaciones >= 2;
+
+6)
+SELECT AVG(p.duracion_minutos) "duracion promedio de peliculas de antes del 2000"
+FROM peliculas p 
+WHERE p.fecha_estreno < "2000-01-01";
+
+7) Hubo errores en el data entry y salen algunas que no deberian
+SELECT * FROM
+    (   -- view de peliculas y sus titulos
+        idioma_pelicula ip1 
+        INNER JOIN titulos_de_peliculas tdp 
+        ON ip1.id_titulo=tdp.id
+    )
+    LEFT JOIN 
+    (   -- view de peliculas con oscars, con idioma original como ingles
+        peliculas p 
+        INNER JOIN idioma_pelicula ip2 
+        ON p.id=ip2.id_pelicula 
+        INNER JOIN idiomas i ON i.id=ip2.id_idioma 
+        AND ip2.idioma_original 
+        AND i.codigo_iso="en" 
+        AND p.oscar
+    )
+ON ip1.id_pelicula=ip2.id_pelicula
+WHERE ip1.id_pelicula IS NULL
+GROUP BY ip1.id_pelicula;
+
+9)
+-- creo una view con todas las peliculas con sus titulos disponibles
+
+CREATE VIEW titulos_disponibles AS
+SELECT ip.idioma_original,tdp.id AS id_titulo,tdp.titulo,i.codigo_iso 
+FROM titulos_de_peliculas tdp
+INNER JOIN idioma_pelicula ip
+ON tdp.id=ip.id_titulo
+INNER JOIN idiomas i
+ON i.id=ip.id_idioma;
+
+-- uso la misma view pero una tiene filtrada los idiomas originales
+-- y la otra tiene filtrada el titulo en espanol
+
+SELECT * FROM titulos_disponibles t1
+INNER JOIN titulos_disponibles t2 
+ON t1.id_titulo=t2.id_titulo
+WHERE t1.idioma_original
+AND t2.codigo_iso="es"
+GROUP BY t1.id_titulo;
+
+10)
+SELECT gdp.nombre generos, COUNT(*) cantidad_peliculas 
+FROM genero_pelicula gp 
+INNER JOIN generos_de_peliculas gdp 
+ON gdp.id=gp.id_genero_de_pelicula 
+GROUP BY (gdp.id);
+
+8) 
+

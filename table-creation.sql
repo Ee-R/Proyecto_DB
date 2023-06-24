@@ -28,7 +28,7 @@ CREATE TABLE idioma_pelicula(
     id_idioma INT,
     idioma_original BOOLEAN NOT NULL DEFAULT FALSE,
     id_titulo INT,
-    CONSTRAINT idioma_pelicula_pk PRIMARY KEY(id_pelicula,id_idioma,id_titulo)
+    CONSTRAINT pepe PRIMARY KEY (id_pelicula,id_titulo,id_idioma)
 );
 
 CREATE TABLE idiomas(
@@ -76,8 +76,7 @@ CREATE TABLE generos_de_peliculas(
 CREATE TABLE serie_pelicula(
     id_pelicula INT,
     id_serie INT,
-    parte INT NOT NULL,
-    CONSTRAINT serie_pelicula_pk PRIMARY KEY (id_pelicula,id_serie)
+    parte INT NOT NULL
 );
 
 -- ALTER
@@ -85,7 +84,7 @@ ALTER TABLE serie_pelicula
 ADD CONSTRAINT serie_pelicula_pelicula_fk 
 FOREIGN KEY (id_pelicula) REFERENCES peliculas(id) ON DELETE CASCADE,
 ADD CONSTRAINT serie_pelicula_serie_fk
-FOREIGN KEY (id_titulo) REFERENCES series_de_peliculas(id) ON DELETE CASCADE;
+FOREIGN KEY (id_serie) REFERENCES series_de_peliculas(id) ON DELETE CASCADE;
 
 ALTER TABLE idioma_pelicula 
 ADD CONSTRAINT idioma_fk
@@ -94,12 +93,6 @@ ADD CONSTRAINT pelicula_fk
 FOREIGN KEY (id_pelicula) REFERENCES peliculas(id) ON DELETE CASCADE,
 ADD CONSTRAINT titulo_fk
 FOREIGN KEY (id_titulo) REFERENCES titulos_de_peliculas(id) ON DELETE CASCADE;
-
-ALTER TABLE peliculas 
-ADD CONSTRAINT precuela_fk
-FOREIGN KEY (id_precuela) REFERENCES peliculas(id) ON DELETE CASCADE,
-ADD CONSTRAINT secuela_fk
-FOREIGN KEY (id_secuela) REFERENCES peliculas(id) ON DELETE CASCADE;
 
 ALTER TABLE genero_pelicula 
 ADD CONSTRAINT genero_pelicula_id_pelicula
